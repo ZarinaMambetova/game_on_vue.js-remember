@@ -16,7 +16,7 @@
     name: 'Board',
     props: {},
     components: {
-      BoardItem,
+      BoardItem, 
       },
       setup() {
         const difficult = ref(3);
