@@ -1,3 +1,6 @@
+Ссылка на игру: 
+https://zarinamambetova.github.io/game_on_vue.js-remember/index.html
+
 # game-vue
 
 ## Project setup
