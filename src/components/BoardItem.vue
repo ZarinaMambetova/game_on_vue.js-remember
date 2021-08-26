@@ -30,9 +30,15 @@ if (props.field.value === FIELD.FILLED && props.gameStatus === GAME_STATUS.PREVI
 if (props.field.clicked && props.field.value === FIELD.EMPTY) {
   classes += ' error';
 }
+if ( props.gameStatus === GAME_STATUS.NONE  ) {
+    classes = 'item ';
+}
 return classes;
+
   });
-  return { getBoardItemClasses }
+
+  return { getBoardItemClasses };
+  
 },
 methods: {
   select(id) {

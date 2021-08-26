@@ -5,24 +5,29 @@
       @selectField="selectField($event)"/>
     </div>
     <p class="difficult">Сложность: <strong>{{difficult}}</strong></p>
+    <p class="win" v-if="isWin">Поздравляю! Продолжаем играть!</p>
+    <p class="fail" v-if="isFail">Вы проиграли:( Попробуйте еще раз!</p>
     <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
   </div>
 </template>
 
 <script>
   import BoardItem from './BoardItem';
-  import { onBeforeMount, ref, computed } from 'vue';
+  import { onBeforeMount, ref, computed, watch } from 'vue';
+  import {  nextTick } from 'vue';
   import { FIELD, DEFAULT_DIFFICULT, GAME_STATUS, GAME_SPEED, MAX_DIFFICULT } from '@/constants.js';
 
   export default {
     name: 'Board',
-    props: {},
+    props: {
+     
+    },
     components: {
       BoardItem, 
+     
       },
       setup() {
-
-        let difficult = ref(DEFAULT_DIFFICULT);
+         let difficult = ref(DEFAULT_DIFFICULT);
         let fields = ref([]);
         const number = 25;
        const gameStatus = ref(GAME_STATUS.NONE);
@@ -62,16 +67,24 @@
         }
 
         const setWin = () => {
-          if (difficult.value < MAX_DIFFICULT) {
+             gameStatus.value = GAME_STATUS.WIN;
+          setTimeout(async() => {
+            
              difficult.value += 1;
-           
-          } else {
-              difficult.value = DEFAULT_DIFFICULT;
-          }
-           
+             await nextTick();
+        gameStatus.value = GAME_STATUS.NONE;
+          }, GAME_SPEED);
+
 
         }
+        const isWin = computed(() => {
+          return gameStatus.value === GAME_STATUS.WIN;
 
+        });
+        const isFail = computed(() => {
+            return  gameStatus.value === GAME_STATUS.FAIL;
+
+        }); 
         
         const init = () => {
           fields.value = [];
@@ -88,10 +101,14 @@
         }
 
       const canStartGame = computed(() => {
-          return gameStatus.value !== GAME_STATUS.PREVIEW;
+          return gameStatus.value !== GAME_STATUS.PREVIEW ;
 
         });
-
+watch (difficult, (newdifficult) => {
+if (newdifficult > MAX_DIFFICULT) {
+  difficult.value = MAX_DIFFICULT;
+}
+}),
         onBeforeMount(init);
 
         return {
@@ -102,7 +119,9 @@
           gameStatus,
           canStartGame,
           selectField,
-          checkGame
+          checkGame,
+          isWin,
+          isFail
         }
         
       },
@@ -171,4 +190,15 @@
   button:disabled {
     opacity: .5;
   }
+
+  .win {
+color: #42b983;
+
+  }
+
+  .fail {
+    color: #ff000055;
+
+  }
+
 </style>
