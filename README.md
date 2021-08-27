@@ -1,4 +1,6 @@
 
+Можете поиграть в эту игру тут: https://zarinamambetova.github.io/game_on_vue.js-remember/index.html
+
 # game-vue
 
 ## Project setup
