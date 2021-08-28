@@ -5,8 +5,10 @@
       @selectField="selectField($event)"/>
     </div>
     <p class="difficult">Сложность: <strong>{{difficult}}</strong></p>
-    <p class="win" v-if="isWin">Поздравляю! Продолжаем играть!</p>
-    <p class="fail" v-if="isFail">Вы проиграли:( Попробуйте еще раз!</p>
+    <div class="message">
+      <p class="win" v-if="isWin"><b>Поздравляю! <br>Продолжаем играть!</b></p>
+      <p class="fail" v-if="isFail"><b>Вы проиграли:( <br>Попробуйте еще раз!</b></p>
+    </div>
     <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
   </div>
 </template>
@@ -164,13 +166,14 @@ if (newdifficult > MAX_DIFFICULT) {
   .board__wrapper {
     margin-bottom: 100px;
     text-align: center;
+    position: relative;
   }
 
   .board {
     width: 300px;
     background: #eee;
     margin: 0 auto;
-
+height: 316px;
   }
   .btn {
     background: #42b983cc;
@@ -178,7 +181,7 @@ if (newdifficult > MAX_DIFFICULT) {
     border: none;
     border-radius: 25px;
     padding: 15px 50px;
-    margin: 10px 0;
+    margin: 0 0 10px 0;
     cursor: pointer;
     outline: none;
   }
@@ -190,6 +193,22 @@ if (newdifficult > MAX_DIFFICULT) {
   button:disabled {
     opacity: .5;
   }
+.message p {
+  position: absolute;
+   margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 165px;
+    top: 0;
+    background-color: #fff;
+    padding: 22px;
+    border-radius: 5px;
+    border: 1px solid;
+
+}
+
 
   .win {
 color: #42b983;
